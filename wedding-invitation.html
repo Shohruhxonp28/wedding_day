@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nikoh To'yi | Свадебное Приглашение</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet" />
+
+<style>
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root {
+  --white:      #FFFFFF;
+  --cream:      #FAF6F1;
+  --beige:      #F2EBE0;
+  --beige-deep: #E8DDD0;
+  --gold:       #C9A84C;
+  --gold-light: #E2C97A;
+  --gold-dark:  #A0782A;
+  --rose:       #F4D0CC;
+  --rose-deep:  #E8B4AD;
+  --blush:      #FBE9E7;
+  --text-dark:  #2C2118;
+  --text-mid:   #5C4A38;
+  --text-soft:  #8C7A6A;
+  --shadow-sm:  0 2px 16px rgba(201,168,76,0.10);
+  --shadow-md:  0 8px 40px rgba(44,33,24,0.10);
+  --shadow-lg:  0 20px 60px rgba(44,33,24,0.15);
+  --radius-sm:  12px;
+  --radius-md:  24px;
+  --radius-lg:  40px;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans:  'Montserrat', system-ui, sans-serif;
+  --font-script:'Great Vibes', cursive;
+  --transition: 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  background: var(--cream);
+  color: var(--text-dark);
+  font-family: var(--font-sans);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; display: block; }
+
+/* ============================================================
+   LANGUAGE SWITCHER
+   ============================================================ */
+.lang-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 20px;
+  background: rgba(250,246,241,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(201,168,76,0.18);
+  box-shadow: var(--shadow-sm);
+}
+
+.lang-btn {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  background: transparent;
+  border: 1.5px solid transparent;
+  border-radius: 50px;
+  padding: 6px 18px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.lang-btn:hover { color: var(--gold); border-color: var(--gold-light); }
+
+.lang-btn.active {
+  color: var(--gold-dark);
+  border-color: var(--gold);
+  background: rgba(201,168,76,0.08);
+}
+
+/* ============================================================
+   FLORAL SVG DECORATIONS (inline)
+   ============================================================ */
+.floral-top, .floral-bottom {
+  width: 100%;
+  pointer-events: none;
+  display: block;
+}
+
+/* ============================================================
+   REVEAL ANIMATION
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.22s; }
+.reveal-delay-3 { transition-delay: 0.34s; }
+.reveal-delay-4 { transition-delay: 0.46s; }
+
+/* ============================================================
+   SECTION SHARED
+   ============================================================ */
+section {
+  padding: 80px 20px;
+  position: relative;
+}
+
+.section-label {
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 400;
+  color: var(--text-dark);
+  line-height: 1.2;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 28px auto;
+  max-width: 320px;
+}
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+}
+.divider-icon {
+  font-size: 1.2rem;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   HERO SECTION
+   ============================================================ */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 100px 24px 60px;
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(244,208,204,0.45) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 90%, rgba(201,168,76,0.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 50%, rgba(242,235,224,0.9) 0%, var(--cream) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-floral {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.55;
+}
+.hero-floral-tl { top: 40px; left: -20px; width: min(340px, 50vw); transform: rotate(-10deg); }
+.hero-floral-br { bottom: 20px; right: -20px; width: min(340px, 50vw); transform: rotate(170deg); }
+
+.hero-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+  margin-bottom: 18px;
+}
+
+.hero-logo-container {
+  margin-bottom: 30px;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-logo {
+  width: 100px;
+  height: auto;
+  object-fit: contain;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-names {
+  font-family: var(--font-script);
+  font-size: clamp(3.5rem, 10vw, 7rem);
+  color: var(--text-dark);
+  line-height: 1.05;
+  margin-bottom: 6px;
+}
+
+.hero-ampersand {
+  display: block;
+  font-family: var(--font-script);
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  color: var(--gold);
+  line-height: 1;
+}
+
+.hero-subtitle {
+  font-family: var(--font-serif);
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text-mid);
+  margin: 22px 0 8px;
+  max-width: 520px;
+}
+
+.hero-date {
+  font-family: var(--font-serif);
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  color: var(--text-soft);
+  letter-spacing: 0.05em;
+}
+
+.hero-datetime {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin: 18px 0 36px;
+  flex-wrap: wrap;
+}
+
+.hero-datetime-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-datetime-value {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 500;
+  color: var(--text-dark);
+  line-height: 1;
+}
+
+.hero-datetime-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.hero-datetime-sep {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  color: var(--gold-light);
+  margin-top: -8px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  border-radius: 50px;
+  padding: 14px 28px;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-dark) 100%);
+  color: var(--white);
+  box-shadow: 0 4px 20px rgba(160,120,42,0.35);
+}
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(160,120,42,0.45);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--gold-dark);
+  border: 1.5px solid var(--gold);
+}
+.btn-outline:hover {
+  background: rgba(201,168,76,0.08);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(201,168,76,0.18);
+}
+
+.btn-soft {
+  background: rgba(244,208,204,0.35);
+  color: var(--text-mid);
+  border: 1px solid var(--rose-deep);
+}
+.btn-soft:hover {
+  background: rgba(244,208,204,0.6);
+  transform: translateY(-2px);
+}
+
+.btn-icon { font-size: 1rem; }
+
+/* ============================================================
+   COUPLE SECTION
+   ============================================================ */
+#couple {
+  background: var(--white);
+  text-align: center;
+}
+
+.couple-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 40px 20px;
+  align-items: start;
+  max-width: 800px;
+  margin: 48px auto 0;
+}
+
+.couple-card {
+  background: var(--cream);
+  border-radius: var(--radius-md);
+  padding: 40px 28px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--beige-deep);
+  transition: var(--transition);
+}
+.couple-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+.couple-role {
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.couple-name {
+  font-family: var(--font-serif);
+  font-size: clamp(1.4rem, 3.5vw, 2rem);
+  font-weight: 500;
+  color: var(--text-dark);
+  line-height: 1.2;
+  margin-bottom: 22px;
+}
+
+.couple-socials {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.couple-sep {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 48px;
+}
+
+.couple-sep-heart {
+  font-family: var(--font-script);
+  font-size: 3.5rem;
+  color: var(--gold);
+  line-height: 1;
+  animation: heartbeat 2s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.08); }
+  50% { transform: scale(0.96); }
+  75% { transform: scale(1.05); }
+}
+
+/* ============================================================
+   VENUE SECTION
+   ============================================================ */
+#venue {
+  background: var(--beige);
+  text-align: center;
+}
+
+.venue-card {
+  max-width: 620px;
+  margin: 48px auto 0;
+  background: var(--white);
+  border-radius: var(--radius-md);
+  padding: 48px 36px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--beige-deep);
+}
+
+.venue-name {
+  font-family: var(--font-serif);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 500;
+  color: var(--text-dark);
+  margin-bottom: 10px;
+}
+
+.venue-address-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.venue-address {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  color: var(--text-mid);
+  font-style: italic;
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+.venue-map-placeholder {
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--beige);
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 28px;
+  border: 1px solid var(--beige-deep);
+  position: relative;
+}
+
+.venue-map-placeholder svg {
+  width: 56px;
+  height: 56px;
+  color: var(--gold);
+  opacity: 0.6;
+}
+
+.venue-map-text {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  white-space: nowrap;
+}
+
+/* ============================================================
+   MUSIC SECTION
+   ============================================================ */
+#music {
+  background: linear-gradient(135deg, var(--text-dark) 0%, #3d2a1a 100%);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+#music::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 50%, rgba(201,168,76,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 50%, rgba(244,208,204,0.08) 0%, transparent 60%);
+}
+
+#music .section-label { color: var(--gold-light); }
+#music .section-title { color: var(--white); }
+
+.music-player {
+  position: relative;
+  max-width: 420px;
+  margin: 48px auto 0;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: var(--radius-md);
+  padding: 48px 32px;
+  backdrop-filter: blur(8px);
+}
+
+.music-waveform {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 48px;
+  margin-bottom: 32px;
+}
+
+.music-bar {
+  width: 4px;
+  border-radius: 2px;
+  background: var(--gold);
+  opacity: 0.5;
+  transition: height 0.3s ease, opacity 0.3s ease;
+}
+
+.music-player.playing .music-bar { opacity: 1; }
+.music-player.playing .music-bar:nth-child(1)  { animation: wave 1.0s ease-in-out infinite; height: 16px; }
+.music-player.playing .music-bar:nth-child(2)  { animation: wave 1.2s ease-in-out infinite 0.1s; height: 28px; }
+.music-player.playing .music-bar:nth-child(3)  { animation: wave 0.9s ease-in-out infinite 0.2s; height: 40px; }
+.music-player.playing .music-bar:nth-child(4)  { animation: wave 1.3s ease-in-out infinite 0.05s; height: 48px; }
+.music-player.playing .music-bar:nth-child(5)  { animation: wave 1.0s ease-in-out infinite 0.15s; height: 36px; }
+.music-player.playing .music-bar:nth-child(6)  { animation: wave 1.1s ease-in-out infinite 0.25s; height: 24px; }
+.music-player.playing .music-bar:nth-child(7)  { animation: wave 0.8s ease-in-out infinite 0.05s; height: 40px; }
+.music-player.playing .music-bar:nth-child(8)  { animation: wave 1.2s ease-in-out infinite 0.2s; height: 32px; }
+.music-player.playing .music-bar:nth-child(9)  { animation: wave 1.0s ease-in-out infinite 0.1s; height: 20px; }
+.music-player.playing .music-bar:nth-child(10) { animation: wave 0.9s ease-in-out infinite 0.3s; height: 14px; }
+
+.music-bar:not(:nth-child(-n+10)) { height: 8px; }
+
+@keyframes wave {
+  0%, 100% { transform: scaleY(0.5); }
+  50%       { transform: scaleY(1.2); }
+}
+
+.music-play-btn {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  box-shadow: 0 8px 32px rgba(201,168,76,0.5);
+  transition: var(--transition);
+  position: relative;
+}
+
+.music-play-btn::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid rgba(201,168,76,0.3);
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+.music-play-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 12px 40px rgba(201,168,76,0.6);
+}
+
+.music-play-btn svg {
+  width: 28px;
+  height: 28px;
+  fill: var(--white);
+  transition: var(--transition);
+}
+
+@keyframes pulse-ring {
+  0%   { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+.music-status {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+/* ============================================================
+   GIFT / TOYONA SECTION
+   ============================================================ */
+#gift {
+  background: var(--blush);
+  text-align: center;
+}
+
+.gift-card {
+  max-width: 520px;
+  margin: 48px auto 0;
+  background: var(--white);
+  border-radius: var(--radius-md);
+  padding: 48px 36px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--rose);
+}
+
+.card-preview {
+  background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+  border-radius: var(--radius-sm);
+  padding: 28px 28px 22px;
+  margin-bottom: 28px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+}
+
+.card-preview::before {
+  content: '';
+  position: absolute;
+  top: -30px; right: -30px;
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: rgba(201,168,76,0.15);
+}
+
+.card-preview::after {
+  content: '';
+  position: absolute;
+  bottom: -20px; left: -20px;
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: rgba(201,168,76,0.10);
+}
+
+.card-chip {
+  width: 40px;
+  height: 30px;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  border-radius: 6px;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.card-number-display {
+  font-family: 'Courier New', monospace;
+  font-size: clamp(1rem, 4vw, 1.35rem);
+  color: var(--white);
+  letter-spacing: 0.25em;
+  margin-bottom: 18px;
+  position: relative;
+  z-index: 1;
+}
+
+.card-owner {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  position: relative;
+  z-index: 1;
+}
+
+.card-owner-name {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.9);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  margin-top: 3px;
+}
+
+.copy-success {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: #2e7d32;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: var(--transition);
+  margin-top: 10px;
+  height: 24px;
+}
+.copy-success.show { opacity: 1; transform: translateY(0); }
+
+/* ============================================================
+   RSVP SECTION
+   ============================================================ */
+#rsvp {
+  background: var(--white);
+  text-align: center;
+}
+
+.rsvp-card {
+  max-width: 520px;
+  margin: 48px auto 0;
+  background: var(--cream);
+  border-radius: var(--radius-md);
+  padding: 48px 36px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--beige-deep);
+}
+
+.rsvp-subtitle {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-style: italic;
+  color: var(--text-mid);
+  margin-bottom: 32px;
+}
+
+.rsvp-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.rsvp-result {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--text-soft);
+  min-height: 28px;
+  transition: var(--transition);
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  background: var(--text-dark);
+  color: rgba(255,255,255,0.8);
+  text-align: center;
+  padding: 60px 24px 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+footer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.10) 0%, transparent 60%);
+}
+
+.footer-names {
+  font-family: var(--font-script);
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
+  color: var(--gold-light);
+  line-height: 1.1;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.footer-msg {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: rgba(255,255,255,0.65);
+  max-width: 480px;
+  margin: 0 auto 28px;
+  line-height: 1.7;
+  position: relative;
+}
+
+.footer-divider {
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 0 auto 24px;
+}
+
+.footer-date {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  position: relative;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 680px) {
+  .couple-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .couple-sep { padding-top: 0; }
+  .venue-card, .gift-card, .rsvp-card, .music-player { padding: 36px 22px; }
+  section { padding: 64px 16px; }
+  .hero-datetime { gap: 14px; }
+}
+
+@media (max-width: 400px) {
+  .hero-buttons { flex-direction: column; align-items: center; }
+  .btn { width: 100%; justify-content: center; }
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: var(--gold-light); border-radius: 3px; }
+
+/* ============================================================
+   FLOATING MUSIC BUTTON (pastki burchak)
+   ============================================================ */
+.float-music-btn {
+  position: fixed;
+  bottom: 28px;
+  right: 24px;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 60%, var(--gold-dark) 100%);
+  color: var(--white);
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px 12px 16px;
+  cursor: pointer;
+  box-shadow: 0 6px 28px rgba(160,120,42,0.45);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: var(--transition);
+  white-space: nowrap;
+  animation: float-in 0.7s cubic-bezier(0.34,1.56,0.64,1) 1.2s both;
+}
+
+.float-music-btn:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 10px 36px rgba(160,120,42,0.55);
+}
+
+.float-music-btn:active { transform: scale(0.97); }
+
+.float-music-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.float-music-icon svg {
+  width: 16px;
+  height: 16px;
+  fill: var(--white);
+}
+
+/* Spinning vinyl disc when playing */
+.float-music-btn.playing .float-music-icon {
+  animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Pulse ring around button when playing */
+.float-music-btn.playing::before {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border-radius: 50px;
+  border: 2px solid rgba(201,168,76,0.5);
+  animation: float-pulse 1.8s ease-out infinite;
+}
+
+@keyframes float-pulse {
+  0%   { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(1.12); opacity: 0; }
+}
+
+@keyframes float-in {
+  from { opacity: 0; transform: translateY(30px) scale(0.85); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Note dots floating up when playing */
+.music-note {
+  position: fixed;
+  font-size: 1.1rem;
+  color: var(--gold);
+  pointer-events: none;
+  z-index: 998;
+  animation: note-float 2.2s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes note-float {
+  0%   { opacity: 0.9; transform: translateY(0) scale(1); }
+  100% { opacity: 0;   transform: translateY(-90px) scale(0.5); }
+}
+
+/* ============================================================
+   FLOATING MUSIC BUTTON (chap burchak)
+   ============================================================ */
+.float-music-btn {
+  position: fixed;
+  bottom: 28px;
+  right: 24px; /* O'zgartirildi: left -> right */
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 60%, var(--gold-dark) 100%);
+  color: var(--white);
+  border: none;
+  border-radius: 50%; /* Dumaloq qilish uchun */
+  width: 50px;  /* Kichikroq o'lcham */
+  height: 50px;
+  cursor: pointer;
+  box-shadow: 0 6px 28px rgba(160,120,42,0.45);
+  transition: var(--transition);
+  animation: float-in 0.7s cubic-bezier(0.34,1.56,0.64,1) 1.2s both;
+}
+
+.float-music-btn:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 10px 36px rgba(160,120,42,0.55);
+}
+
+.float-music-btn:active { transform: scale(0.97); }
+
+.float-music-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.float-music-icon svg {
+  width: 16px;
+  height: 16px;
+  fill: var(--white);
+}
+
+/* Spinning vinyl disc */
+.float-music-btn.playing .float-music-icon {
+  animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes float-in {
+  from { opacity: 0; transform: translateY(30px) scale(0.85); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ============================================================
+     LANGUAGE SWITCHER
+     ============================================================ -->
+<div class="lang-bar" role="navigation" aria-label="Language switcher">
+  <button class="lang-btn active" onclick="setLang('uz')" id="btn-uz">O'zbekcha</button>
+  <span style="color:var(--beige-deep);font-size:1rem;">|</span>
+  <button class="lang-btn" onclick="setLang('ru')" id="btn-ru">Русский</button>
+</div>
+
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section id="hero">
+
+  <!-- Floral corner decorations (SVG inline) -->
+  <div class="hero-floral hero-floral-tl" aria-hidden="true">
+    <svg viewBox="0 0 400 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g opacity="0.85">
+        <!-- Stems -->
+        <path d="M40 380 Q80 280 60 200 Q50 140 90 80" stroke="#C9A84C" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M40 380 Q120 300 140 220 Q160 160 130 100" stroke="#C9A84C" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M40 380 Q20 300 50 240 Q70 190 40 130" stroke="#A0782A" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <!-- Leaves -->
+        <path d="M60 200 Q90 175 100 195 Q80 210 60 200Z" fill="#B5C9A0" opacity="0.6"/>
+        <path d="M90 150 Q125 120 130 145 Q105 158 90 150Z" fill="#B5C9A0" opacity="0.5"/>
+        <path d="M50 240 Q15 215 20 240 Q35 255 50 240Z" fill="#B5C9A0" opacity="0.55"/>
+        <!-- Flowers -->
+        <!-- Rose 1 -->
+        <circle cx="90" cy="80" r="18" fill="#F4D0CC" opacity="0.9"/>
+        <circle cx="90" cy="80" r="11" fill="#E8B4AD" opacity="0.8"/>
+        <circle cx="90" cy="80" r="5" fill="#C9A84C" opacity="0.9"/>
+        <ellipse cx="73" cy="72" rx="10" ry="7" fill="#F4D0CC" opacity="0.7" transform="rotate(-30 73 72)"/>
+        <ellipse cx="107" cy="72" rx="10" ry="7" fill="#F4D0CC" opacity="0.7" transform="rotate(30 107 72)"/>
+        <ellipse cx="90" cy="62" rx="8" ry="11" fill="#F4D0CC" opacity="0.75"/>
+        <ellipse cx="90" cy="98" rx="8" ry="11" fill="#F4D0CC" opacity="0.6"/>
+        <!-- Rose 2 -->
+        <circle cx="130" cy="100" r="13" fill="#F4D0CC" opacity="0.85"/>
+        <circle cx="130" cy="100" r="7" fill="#E8B4AD" opacity="0.8"/>
+        <circle cx="130" cy="100" r="3" fill="#C9A84C"/>
+        <ellipse cx="117" cy="93" rx="8" ry="5" fill="#F4D0CC" opacity="0.7" transform="rotate(-20 117 93)"/>
+        <ellipse cx="143" cy="93" rx="8" ry="5" fill="#F4D0CC" opacity="0.7" transform="rotate(20 143 93)"/>
+        <!-- Small buds -->
+        <circle cx="50" cy="130" r="8" fill="#F4D0CC" opacity="0.7"/>
+        <circle cx="50" cy="130" r="4" fill="#E8B4AD" opacity="0.7"/>
+        <!-- Tiny flowers -->
+        <circle cx="75" cy="170" r="5" fill="#E2C97A" opacity="0.65"/>
+        <circle cx="140" cy="155" r="4" fill="#E2C97A" opacity="0.55"/>
+        <circle cx="25" cy="200" r="4" fill="#F4D0CC" opacity="0.6"/>
+        <!-- Dots -->
+        <circle cx="100" cy="120" r="2" fill="#C9A84C" opacity="0.5"/>
+        <circle cx="65" cy="140" r="2" fill="#C9A84C" opacity="0.45"/>
+        <circle cx="155" cy="130" r="2" fill="#C9A84C" opacity="0.4"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="hero-floral hero-floral-br" aria-hidden="true">
+    <svg viewBox="0 0 400 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g opacity="0.85">
+        <path d="M40 380 Q80 280 60 200 Q50 140 90 80" stroke="#C9A84C" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M40 380 Q120 300 140 220 Q160 160 130 100" stroke="#C9A84C" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M40 380 Q20 300 50 240 Q70 190 40 130" stroke="#A0782A" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <path d="M60 200 Q90 175 100 195 Q80 210 60 200Z" fill="#B5C9A0" opacity="0.6"/>
+        <path d="M90 150 Q125 120 130 145 Q105 158 90 150Z" fill="#B5C9A0" opacity="0.5"/>
+        <path d="M50 240 Q15 215 20 240 Q35 255 50 240Z" fill="#B5C9A0" opacity="0.55"/>
+        <circle cx="90" cy="80" r="18" fill="#F4D0CC" opacity="0.9"/>
+        <circle cx="90" cy="80" r="11" fill="#E8B4AD" opacity="0.8"/>
+        <circle cx="90" cy="80" r="5" fill="#C9A84C" opacity="0.9"/>
+        <ellipse cx="73" cy="72" rx="10" ry="7" fill="#F4D0CC" opacity="0.7" transform="rotate(-30 73 72)"/>
+        <ellipse cx="107" cy="72" rx="10" ry="7" fill="#F4D0CC" opacity="0.7" transform="rotate(30 107 72)"/>
+        <ellipse cx="90" cy="62" rx="8" ry="11" fill="#F4D0CC" opacity="0.75"/>
+        <ellipse cx="90" cy="98" rx="8" ry="11" fill="#F4D0CC" opacity="0.6"/>
+        <circle cx="130" cy="100" r="13" fill="#F4D0CC" opacity="0.85"/>
+        <circle cx="130" cy="100" r="7" fill="#E8B4AD" opacity="0.8"/>
+        <circle cx="130" cy="100" r="3" fill="#C9A84C"/>
+        <ellipse cx="117" cy="93" rx="8" ry="5" fill="#F4D0CC" opacity="0.7" transform="rotate(-20 117 93)"/>
+        <ellipse cx="143" cy="93" rx="8" ry="5" fill="#F4D0CC" opacity="0.7" transform="rotate(20 143 93)"/>
+        <circle cx="50" cy="130" r="8" fill="#F4D0CC" opacity="0.7"/>
+        <circle cx="50" cy="130" r="4" fill="#E8B4AD" opacity="0.7"/>
+        <circle cx="75" cy="170" r="5" fill="#E2C97A" opacity="0.65"/>
+        <circle cx="140" cy="155" r="4" fill="#E2C97A" opacity="0.55"/>
+        <circle cx="25" cy="200" r="4" fill="#F4D0CC" opacity="0.6"/>
+        <circle cx="100" cy="120" r="2" fill="#C9A84C" opacity="0.5"/>
+        <circle cx="65" cy="140" r="2" fill="#C9A84C" opacity="0.45"/>
+        <circle cx="155" cy="130" r="2" fill="#C9A84C" opacity="0.4"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="hero-logo-container reveal">
+    <img src="image.png" alt="Logo" class="hero-logo">
+  </div>
+
+  <p class="hero-eyebrow reveal" data-lang-uz="✦ NIKOH TO'YI TAKLIFI ✦" data-lang-ru="✦ СВАДЕБНОЕ ПРИГЛАШЕНИЕ ✦"></p>
+
+  <div class="hero-names reveal reveal-delay-1">
+    <span id="hero-groom-name"></span>
+    <span class="hero-ampersand">&amp;</span>
+    <span id="hero-bride-name"></span>
+  </div>
+
+  <p class="hero-subtitle reveal reveal-delay-2" id="hero-subtitle"></p>
+
+  <div class="hero-datetime reveal reveal-delay-3">
+    <div class="hero-datetime-item">
+      <span class="hero-datetime-value" id="hero-day"></span>
+      <span class="hero-datetime-label" data-lang-uz="KUN" data-lang-ru="ДЕНЬ"></span>
+    </div>
+    <div class="hero-datetime-sep">✦</div>
+    <div class="hero-datetime-item">
+      <span class="hero-datetime-value" id="hero-month"></span>
+      <span class="hero-datetime-label" data-lang-uz="OY" data-lang-ru="МЕСЯЦ"></span>
+    </div>
+    <div class="hero-datetime-sep">✦</div>
+    <div class="hero-datetime-item">
+      <span class="hero-datetime-value" id="hero-year"></span>
+      <span class="hero-datetime-label" data-lang-uz="YIL" data-lang-ru="ГОД"></span>
+    </div>
+    <div class="hero-datetime-sep" style="margin:0 8px;">|</div>
+    <div class="hero-datetime-item">
+      <span class="hero-datetime-value" id="hero-time"></span>
+      <span class="hero-datetime-label" data-lang-uz="VAQT" data-lang-ru="ВРЕМЯ"></span>
+    </div>
+  </div>
+
+  <div class="hero-buttons reveal reveal-delay-4">
+    <a id="hero-location-btn" class="btn btn-gold" href="#venue">
+      <span class="btn-icon">📍</span>
+      <span data-lang-uz="Lokatsiyani ko'rish" data-lang-ru="Посмотреть локацию"></span>
+    </a>
+
+  </div>
+</section>
+
+
+
+
+
+<!-- ============================================================
+     VENUE
+     ============================================================ -->
+<section id="venue">
+  <span class="section-label reveal" data-lang-uz="✦ MANZIL ✦" data-lang-ru="✦ МЕСТО ПРОВЕДЕНИЯ ✦"></span>
+  <h2 class="section-title reveal reveal-delay-1" data-lang-uz="To'yxona" data-lang-ru="Ресторан / Банкетный зал"></h2>
+  <div class="divider reveal reveal-delay-2"><span class="divider-icon">❧</span></div>
+
+  <div class="venue-card reveal reveal-delay-2">
+    <div class="venue-name" id="venue-name-el"></div>
+
+    <div class="divider" style="margin:16px auto 20px;max-width:200px;"></div>
+
+    <div class="venue-address-label" data-lang-uz="Manzil" data-lang-ru="Адрес"></div>
+    <div class="venue-address" id="venue-address-el"></div>
+
+    <!-- Google Maps Embed -->
+    <div class="venue-map-container" style="border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 28px; border: 1px solid var(--beige-deep); height: 300px; position: relative;">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d761.6479416129274!2d69.2677452!3d40.218143!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38b19634c6ffffff%3A0x3a8a80c5a508df7f!2z0JTQvtC8INC80L7Qu9C-0LTRkdC20Lg!5e0!3m2!1sru!2s!4v1781071645616!5m2!1sru!2s" width="100%" height="100%" style="border:0; position: absolute; top:0; left:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+
+    <a id="venue-map-btn" class="btn btn-gold" href="#" target="_blank" style="width:100%;justify-content:center;">
+      <span class="btn-icon">🗺️</span>
+      <span data-lang-uz="Lokatsiyani ochish" data-lang-ru="Открыть локацию"></span>
+    </a>
+  </div>
+</section>
+
+
+
+
+
+<!-- ============================================================
+     GIFT / TOYONA
+     ============================================================ -->
+<section id="gift">
+  <span class="section-label reveal" data-lang-uz="✦ TO'YONA ✦" data-lang-ru="✦ ПОДАРОК ✦"></span>
+  <h2 class="section-title reveal reveal-delay-1" data-lang-uz="To'yona uchun Karta" data-lang-ru="Карта для Подарка"></h2>
+  <div class="divider reveal reveal-delay-2"><span class="divider-icon">💝</span></div>
+
+  <div class="gift-card reveal reveal-delay-2">
+    <div class="card-preview">
+      <div class="card-chip"></div>
+      <div class="card-number-display" id="gift-card-number-display"></div>
+      <div class="card-owner">
+        <div data-lang-uz="Karta egasi" data-lang-ru="Владелец карты"></div>
+        <div class="card-owner-name" id="gift-card-owner-display"></div>
+      </div>
+    </div>
+
+    <button class="btn btn-gold" onclick="copyCardNumber()" style="width:100%;justify-content:center;">
+      <span class="btn-icon">📋</span>
+      <span data-lang-uz="Karta raqamidan nusxa olish" data-lang-ru="Скопировать номер карты"></span>
+    </button>
+
+    <div class="copy-success" id="copy-success">
+      <span>✓</span>
+      <span data-lang-uz="Nusxa olindi!" data-lang-ru="Скопировано!"></span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     RSVP
+     ============================================================ -->
+<section id="rsvp">
+  <span class="section-label reveal" data-lang-uz="✦ TASDIQLASH ✦" data-lang-ru="✦ ПОДТВЕРЖДЕНИЕ ✦"></span>
+  <h2 class="section-title reveal reveal-delay-1" data-lang-uz="Kelasizmi?" data-lang-ru="Вы придёте?"></h2>
+  <div class="divider reveal reveal-delay-2"><span class="divider-icon">❧</span></div>
+
+  <div class="rsvp-card reveal reveal-delay-2">
+    <p class="rsvp-subtitle" data-lang-uz="Sizni kutib qolaman 🤍" data-lang-ru="Будем рады вас видеть 🤍"></p>
+
+    <div class="rsvp-buttons">
+      <button class="btn btn-gold" onclick="rsvp('yes')" style="justify-content:center;">
+        <span class="btn-icon">🥂</span>
+        <span data-lang-uz="Ha, boraman" data-lang-ru="Да, приду"></span>
+      </button>
+      <button class="btn btn-outline" onclick="rsvp('no')" style="justify-content:center;">
+        <span class="btn-icon">💌</span>
+        <span data-lang-uz="Afsuski, bora olmayman" data-lang-ru="К сожалению, не смогу"></span>
+      </button>
+      <a id="rsvp-tg-btn" class="btn btn-soft" href="#" target="_blank" style="justify-content:center;">
+        <span class="btn-icon">✈️</span>
+        <span data-lang-uz="Telegram orqali tasdiqlash" data-lang-ru="Подтвердить через Telegram"></span>
+      </a>
+    </div>
+
+    <div class="rsvp-result" id="rsvp-result"></div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<!-- ============================================================
+     FLOATING MUSIC BUTTON
+     ============================================================ -->
+<button class="float-music-btn" id="float-music-btn" onclick="toggleMusic()" aria-label="Musiqa">
+  <span class="float-music-icon" id="float-icon">
+    <svg id="float-play-svg" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18A9 9 0 0 0 12 3zm0 4a5 5 0 1 1 0 10A5 5 0 0 1 12 7zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm0 1.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"/></svg>
+    <svg id="float-pause-svg" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+  </span>
+</button>
+
+<!-- Hidden audio element -->
+<audio id="wedding-audio" loop autoplay>
+  <source id="audio-src" src="" type="audio/wav" />
+</audio>
+
+<footer>
+  <div class="footer-names" id="footer-names"></div>
+  <div class="footer-divider"></div>
+  <p class="footer-msg" data-lang-uz="E'tiboringiz uchun rahmat. Sizni to'yimizda kutamiz!" data-lang-ru="Спасибо за внимание. Будем рады видеть вас на нашей свадьбе!"></p>
+  <div class="footer-date" id="footer-date-el"></div>
+</footer>
+
+
+
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+/* ============================================================
+   ✦ EDITABLE CONFIG — change everything here ✦
+   ============================================================ */
+const CONFIG = {
+  /* Names */
+  groomName:        "Jamshid",
+  brideName:        "Farzona",
+
+  /* Date & time */
+  weddingDay:       "01",
+  weddingMonthUz:   "Avgust",
+  weddingMonthRu:   "Августа",
+  weddingYear:      "2026",
+  weddingTime:      "18:00",
+
+  /* Venue */
+  venueName:        "Yoshlar uyi",
+  venueAddress:     "Bekobod sh., \"Yoshlar uyi\" to'yxonasi",
+  googleMapsLink:   "https://maps.app.goo.gl/VMvRLuHzaNnF7ecAA",
+
+  /* Social links */
+  groomTelegram:    "https://t.me/xashimjonov",
+  groomInstagram:   "https://instagram.com/",
+  brideTelegram:    "https://t.me/xashimjonov",
+  brideInstagram:   "https://instagram.com/",
+  rsvpTelegram:     "https://t.me/xashimjonov",   /* for RSVP confirmation */
+
+  /* Gift card */
+  cardNumber:       "5614 6812 1324 3771",
+  cardOwner:        "JAMSHID XASHIMJONOV",
+
+  /* Music — replace with your .mp3 URL or local path */
+  musicSrc:         "music.wav",
+
+  /* Optional background image — set to "" to use gradient */
+  bgImage:          "",
+};
+
+/* ============================================================
+   TRANSLATIONS
+   ============================================================ */
+const T = {
+  uz: {
+    heroSubtitle:       "Sizni nikoh to'yimizga taklif qilamiz",
+    musicPlaying:       "Musiqa ijro etilmoqda...",
+    musicPaused:        "Musiqa to'xtatildi",
+    rsvpYes:            "🥂 Rahmat! Sizi kutib qolamiz!",
+    rsvpNo:             "💌 Tushunarli. Sizni doim yodimizda saqlaymiz.",
+    footerDate:         "1 Avgust 2026",
+  },
+  ru: {
+    heroSubtitle:       "Приглашаем вас на нашу свадьбу",
+    musicPlaying:       "Музыка играет...",
+    musicPaused:        "Музыка на паузе",
+    rsvpYes:            "🥂 Спасибо! Ждём вас!",
+    rsvpNo:             "💌 Понимаем. Вы всегда будете в нашем сердце.",
+    footerDate:         "1 Августа 2026",
+  }
+};
+
+/* ============================================================
+   STATE
+   ============================================================ */
+let currentLang = 'uz';
+let isPlaying = false;
+const audio = document.getElementById('wedding-audio');
+
+/* ============================================================
+   INIT
+   ============================================================ */
+function init() {
+  // Populate static config values
+  document.getElementById('hero-groom-name').textContent   = CONFIG.groomName;
+  document.getElementById('hero-bride-name').textContent   = CONFIG.brideName;
+  document.getElementById('hero-day').textContent          = CONFIG.weddingDay;
+  document.getElementById('hero-year').textContent         = CONFIG.weddingYear;
+  document.getElementById('hero-time').textContent         = CONFIG.weddingTime;
+
+  document.getElementById('venue-name-el').textContent     = CONFIG.venueName;
+  document.getElementById('venue-address-el').textContent  = CONFIG.venueAddress;
+  document.getElementById('gift-card-number-display').textContent = CONFIG.cardNumber;
+  document.getElementById('gift-card-owner-display').textContent  = CONFIG.cardOwner;
+  document.getElementById('footer-names').textContent =
+    CONFIG.groomName + ' & ' + CONFIG.brideName;
+
+  // Links
+
+  document.getElementById('venue-map-btn').href = CONFIG.googleMapsLink;
+  document.getElementById('rsvp-tg-btn').href   = CONFIG.rsvpTelegram;
+
+  // Audio load
+  document.getElementById('audio-src').src = CONFIG.musicSrc;
+  audio.load();
+
+  // Try autoplay immediately
+  audio.volume = 0.8;
+  const tryAutoplay = () => {
+    audio.play().then(() => {
+      setMusicPlaying(true);
+    }).catch(() => {
+      // Autoplay blocked — start on first user interaction
+      const startOnInteract = () => {
+        audio.play().then(() => {
+          setMusicPlaying(true);
+        }).catch(() => {});
+        document.removeEventListener('click', startOnInteract);
+        document.removeEventListener('touchstart', startOnInteract);
+        document.removeEventListener('scroll', startOnInteract);
+        document.removeEventListener('keydown', startOnInteract);
+      };
+      ["click", "touchstart", "scroll", "keydown"].forEach(ev => {
+        document.addEventListener(ev, startOnInteract);
+      });
+    });
+  };
+  tryAutoplay();
+
+  // Optional background
+  if (CONFIG.bgImage) {
+    const hero = document.getElementById('hero');
+    hero.style.backgroundImage = `url(${CONFIG.bgImage})`;
+    hero.style.backgroundSize  = 'cover';
+    hero.style.backgroundPosition = 'center';
+  }
+
+  // Language
+  setLang('uz');
+
+  // Intersection observer for reveal animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+/* ============================================================
+   LANGUAGE SWITCHER
+   ============================================================ */
+function setLang(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+
+  // Toggle active class on buttons
+  document.getElementById('btn-uz').classList.toggle('active', lang === 'uz');
+  document.getElementById('btn-ru').classList.toggle('active', lang === 'ru');
+
+  // Update all [data-lang-X] elements
+  document.querySelectorAll('[data-lang-uz]').forEach(el => {
+    const key = lang === 'uz' ? 'langUz' : 'langRu';
+    const text = el.dataset[key === 'langUz' ? 'langUz' : 'langRu'];
+    if (text !== undefined) el.textContent = text;
+  });
+
+  // Items with children (btn spans, etc.) — handled via data-lang-uz on spans
+  // Also update month
+  document.getElementById('hero-month').textContent =
+    lang === 'uz' ? CONFIG.weddingMonthUz : CONFIG.weddingMonthRu;
+
+  // Hero subtitle
+  document.getElementById('hero-subtitle').textContent = T[lang].heroSubtitle;
+
+  // Footer date
+  document.getElementById('footer-date-el').textContent =
+    lang === 'uz' ? T.uz.footerDate : T.ru.footerDate;
+}
+
+/* ============================================================
+   MUSIC PLAYER
+   ============================================================ */
+function setMusicPlaying(playing) {
+  const floatBtn   = document.getElementById('float-music-btn');
+  const floatPlay  = document.getElementById('float-play-svg');
+  const floatPause = document.getElementById('float-pause-svg');
+
+  isPlaying = playing;
+
+  if (playing) {
+    floatBtn.classList.add('playing');
+    floatPlay.style.display  = 'none';
+    floatPause.style.display = '';
+    spawnNotes();
+  } else {
+    floatBtn.classList.remove('playing');
+    floatPlay.style.display  = '';
+    floatPause.style.display = 'none';
+  }
+}
+
+function toggleMusic() {
+  if (isPlaying) {
+    audio.pause();
+    setMusicPlaying(false);
+  } else {
+    audio.play().then(() => {
+      setMusicPlaying(true);
+    }).catch(err => console.warn('Audio play failed:', err));
+  }
+}
+
+/* Spawn floating music notes near the button */
+let noteTimer = null;
+function spawnNotes() {
+  if (noteTimer) return;
+  noteTimer = setInterval(() => {
+    if (!isPlaying) { clearInterval(noteTimer); noteTimer = null; return; }
+    const notes = ['♪','♫','♩','♬'];
+    const el = document.createElement('span');
+    el.className = 'music-note';
+    el.textContent = notes[Math.floor(Math.random() * notes.length)];
+    const btn = document.getElementById('float-music-btn');
+    const rect = btn.getBoundingClientRect();
+    el.style.left  = (rect.left + rect.width / 2) + 'px';
+    el.style.bottom = (window.innerHeight - rect.top + 10) + 'px';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 2300);
+  }, 1800);
+}
+
+function copyCardNumber() {
+  const raw = CONFIG.cardNumber.replace(/\s/g, '');
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(raw).then(showCopySuccess);
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = raw;
+    ta.style.position = 'fixed';
+    ta.style.opacity  = '0';
+    document.body.appendChild(ta);
+    ta.focus(); ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    showCopySuccess();
+  }
+}
+
+function showCopySuccess() {
+  const el = document.getElementById('copy-success');
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+/* ============================================================
+   RSVP
+   ============================================================ */
+function rsvp(answer) {
+  const el = document.getElementById('rsvp-result');
+  el.style.opacity = '0';
+  setTimeout(() => {
+    el.textContent = answer === 'yes' ? T[currentLang].rsvpYes : T[currentLang].rsvpNo;
+    el.style.opacity = '1';
+  }, 200);
+}
+
+/* ============================================================
+   KICK OFF
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
