@@ -820,6 +820,115 @@ footer::before {
 }
 
 /* ============================================================
+   COUNTDOWN SECTION
+   ============================================================ */
+#countdown {
+  background: var(--white);
+  text-align: center;
+}
+
+.countdown-grid {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  max-width: 600px;
+  margin: 40px auto 0;
+  flex-wrap: wrap;
+}
+
+.countdown-item {
+  background: var(--cream);
+  border: 1px solid var(--beige-deep);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  width: 120px;
+  box-shadow: var(--shadow-sm);
+}
+
+.countdown-value {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: var(--gold-dark);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.countdown-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-soft);
+  font-weight: 600;
+}
+
+/* ============================================================
+   CALENDAR SECTION
+   ============================================================ */
+#calendar {
+  background: var(--beige);
+  text-align: center;
+}
+
+.calendar-wrapper {
+  max-width: 380px;
+  margin: 40px auto 0;
+  background: var(--white);
+  border-radius: var(--radius-md);
+  padding: 30px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--beige-deep);
+}
+
+.calendar-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-mid);
+  text-transform: uppercase;
+}
+
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  row-gap: 8px;
+}
+
+.calendar-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  color: var(--text-dark);
+  border-radius: 50%;
+  position: relative;
+}
+
+.calendar-day.empty {
+  background: transparent;
+}
+
+.calendar-day.wedding-day {
+  background: var(--gold);
+  color: var(--white);
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(201,168,76,0.4);
+}
+
+.calendar-day.wedding-day::after {
+  content: "♡";
+  position: absolute;
+  top: -12px;
+  font-size: 1.2rem;
+  color: var(--gold);
+}
+
+/* ============================================================
    RESPONSIVE
    ============================================================ */
 @media (max-width: 680px) {
@@ -831,6 +940,10 @@ footer::before {
   .venue-card, .gift-card, .rsvp-card, .music-player { padding: 36px 22px; }
   section { padding: 64px 16px; }
   .hero-datetime { gap: 14px; }
+  .countdown-item { padding: 16px; width: auto; flex: 1 1 40%; }
+  .countdown-grid { gap: 12px; }
+  .calendar-wrapper { padding: 24px 16px; max-width: 100%; }
+  .calendar-day { font-size: 1rem; }
 }
 
 @media (max-width: 400px) {
@@ -1151,6 +1264,58 @@ footer::before {
 
 
 <!-- ============================================================
+     COUNTDOWN
+     ============================================================ -->
+<section id="countdown">
+  <span class="section-label reveal" data-lang-uz="✦ KUTILAYOTGAN KUN ✦" data-lang-ru="✦ ОЖИДАЕМЫЙ ДЕНЬ ✦"></span>
+  <h2 class="section-title reveal reveal-delay-1" data-lang-uz="To'ygacha qoldi" data-lang-ru="До свадьбы осталось"></h2>
+  <div class="divider reveal reveal-delay-2"><span class="divider-icon">⏳</span></div>
+
+  <div class="countdown-grid reveal reveal-delay-2">
+    <div class="countdown-item">
+      <div class="countdown-value" id="cd-days">00</div>
+      <div class="countdown-label" data-lang-uz="Kun" data-lang-ru="Дней"></div>
+    </div>
+    <div class="countdown-item">
+      <div class="countdown-value" id="cd-hours">00</div>
+      <div class="countdown-label" data-lang-uz="Soat" data-lang-ru="Часов"></div>
+    </div>
+    <div class="countdown-item">
+      <div class="countdown-value" id="cd-minutes">00</div>
+      <div class="countdown-label" data-lang-uz="Daqiqa" data-lang-ru="Минут"></div>
+    </div>
+    <div class="countdown-item">
+      <div class="countdown-value" id="cd-seconds">00</div>
+      <div class="countdown-label" data-lang-uz="Soniya" data-lang-ru="Секунд"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CALENDAR
+     ============================================================ -->
+<section id="calendar" style="background: var(--beige);">
+  <span class="section-label reveal" data-lang-uz="✦ KALENDAR ✦" data-lang-ru="✦ КАЛЕНДАРЬ ✦"></span>
+  <h2 class="section-title reveal reveal-delay-1" id="calendar-title-el">Avgust 2026</h2>
+  <div class="divider reveal reveal-delay-2"><span class="divider-icon">📅</span></div>
+
+  <div class="calendar-wrapper reveal reveal-delay-2">
+    <div class="calendar-header">
+      <div data-lang-uz="Dush" data-lang-ru="Пн"></div>
+      <div data-lang-uz="Sesh" data-lang-ru="Вт"></div>
+      <div data-lang-uz="Chor" data-lang-ru="Ср"></div>
+      <div data-lang-uz="Pay" data-lang-ru="Чт"></div>
+      <div data-lang-uz="Jum" data-lang-ru="Пт"></div>
+      <div data-lang-uz="Shan" data-lang-ru="Сб"></div>
+      <div data-lang-uz="Yak" data-lang-ru="Вс"></div>
+    </div>
+    <div class="calendar-days" id="calendar-days">
+      <!-- Generated by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
      VENUE
      ============================================================ -->
 <section id="venue">
@@ -1288,6 +1453,7 @@ const CONFIG = {
   weddingDay:       "01",
   weddingMonthUz:   "Avgust",
   weddingMonthRu:   "Августа",
+  weddingMonthNum:  "08",
   weddingYear:      "2026",
   weddingTime:      "18:00",
 
@@ -1415,6 +1581,9 @@ function init() {
   }, { threshold: 0.12 });
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  initCountdown();
+  initCalendar();
 }
 
 /* ============================================================
@@ -1439,6 +1608,11 @@ function setLang(lang) {
   // Also update month
   document.getElementById('hero-month').textContent =
     lang === 'uz' ? CONFIG.weddingMonthUz : CONFIG.weddingMonthRu;
+    
+  const calTitle = document.getElementById('calendar-title-el');
+  if (calTitle) {
+    calTitle.textContent = (lang === 'uz' ? CONFIG.weddingMonthUz : CONFIG.weddingMonthRu) + " " + CONFIG.weddingYear;
+  }
 
   // Hero subtitle
   document.getElementById('hero-subtitle').textContent = T[lang].heroSubtitle;
@@ -1446,6 +1620,72 @@ function setLang(lang) {
   // Footer date
   document.getElementById('footer-date-el').textContent =
     lang === 'uz' ? T.uz.footerDate : T.ru.footerDate;
+}
+
+/* ============================================================
+   COUNTDOWN LOGIC
+   ============================================================ */
+function initCountdown() {
+  const targetDate = new Date(`${CONFIG.weddingYear}-${CONFIG.weddingMonthNum}-${CONFIG.weddingDay}T${CONFIG.weddingTime}:00`);
+
+  function update() {
+    const now = new Date();
+    const diff = targetDate - now;
+
+    if (diff <= 0) {
+      document.getElementById('cd-days').textContent = '00';
+      document.getElementById('cd-hours').textContent = '00';
+      document.getElementById('cd-minutes').textContent = '00';
+      document.getElementById('cd-seconds').textContent = '00';
+      return;
+    }
+
+    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const m = Math.floor((diff / 1000 / 60) % 60);
+    const s = Math.floor((diff / 1000) % 60);
+
+    document.getElementById('cd-days').textContent = d.toString().padStart(2, '0');
+    document.getElementById('cd-hours').textContent = h.toString().padStart(2, '0');
+    document.getElementById('cd-minutes').textContent = m.toString().padStart(2, '0');
+    document.getElementById('cd-seconds').textContent = s.toString().padStart(2, '0');
+  }
+
+  update();
+  setInterval(update, 1000);
+}
+
+/* ============================================================
+   CALENDAR LOGIC
+   ============================================================ */
+function initCalendar() {
+  const container = document.getElementById('calendar-days');
+  if (!container) return;
+  container.innerHTML = '';
+  
+  const year = parseInt(CONFIG.weddingYear, 10);
+  const month = parseInt(CONFIG.weddingMonthNum, 10) - 1; // 0-indexed
+  const highlightDay = parseInt(CONFIG.weddingDay, 10);
+  
+  const firstDay = new Date(year, month, 1).getDay(); // 0(Sun) to 6(Sat)
+  const startDay = firstDay === 0 ? 6 : firstDay - 1; // Mon(0) to Sun(6)
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  
+  for (let i = 0; i < startDay; i++) {
+    const d = document.createElement('div');
+    d.className = 'calendar-day empty';
+    container.appendChild(d);
+  }
+  
+  for (let i = 1; i <= daysInMonth; i++) {
+    const d = document.createElement('div');
+    d.className = 'calendar-day';
+    d.textContent = i;
+    if (i === highlightDay) {
+      d.classList.add('wedding-day');
+    }
+    container.appendChild(d);
+  }
 }
 
 /* ============================================================
