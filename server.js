@@ -2,6 +2,8 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
+// IIS/iisnode uses a named pipe via process.env.PORT
+// For local dev it falls back to port 3000
 const PORT = process.env.PORT || 3000;
 
 const MIME_TYPES = {
@@ -10,45 +12,47 @@ const MIME_TYPES = {
   '.js': 'text/javascript',
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
   '.gif': 'image/gif',
   '.svg': 'image/svg+xml',
   '.wav': 'audio/wav',
   '.mp3': 'audio/mpeg',
   '.json': 'application/json',
-  '.ico': 'image/x-icon'
+  '.ico': 'image/x-icon',
+  '.webp': 'image/webp',
+  '.woff': 'font/woff',
+  '.woff2': 'font/woff2',
+  '.ttf': 'font/ttf',
 };
 
 const server = http.createServer((req, res) => {
-  // Only allow GET and HEAD methods
+  // Only allow GET and HEAD
   if (req.method !== 'GET' && req.method !== 'HEAD') {
     res.statusCode = 405;
     res.end('Method Not Allowed');
     return;
   }
 
-  // Normalize URL path to prevent directory traversal
-  let safePath = req.url;
+  // Decode and sanitize URL
+  let urlPath;
   try {
-    safePath = decodeURIComponent(safePath);
+    urlPath = decodeURIComponent(req.url.split('?')[0].split('#')[0]);
   } catch (e) {
     res.statusCode = 400;
     res.end('Bad Request');
     return;
   }
 
-  // Remove query parameters or hash
-  safePath = safePath.split('?')[0].split('#')[0];
-
-  // If root, serve the wedding-invitation.html
-  if (safePath === '/' || safePath === '/index.html') {
-    safePath = '/wedding-invitation.html';
+  // Serve index
+  if (urlPath === '/' || urlPath === '/index.html') {
+    urlPath = '/wedding-invitation.html';
   }
 
-  // Resolve absolute path
-  const filePath = path.join(__dirname, safePath);
+  // Resolve to absolute path
+  const filePath = path.join(__dirname, urlPath);
 
-  // Security check: Ensure the path is within the project directory
-  if (!filePath.startsWith(__dirname)) {
+  // Security: prevent directory traversal
+  if (!filePath.startsWith(__dirname + path.sep) && filePath !== __dirname) {
     res.statusCode = 403;
     res.end('Forbidden');
     return;
@@ -56,8 +60,17 @@ const server = http.createServer((req, res) => {
 
   fs.stat(filePath, (err, stats) => {
     if (err || !stats.isFile()) {
-      res.statusCode = 404;
-      res.end('Not Found');
+      // Fallback: serve the main HTML for any unknown route
+      const indexPath = path.join(__dirname, 'wedding-invitation.html');
+      fs.readFile(indexPath, (readErr, data) => {
+        if (readErr) {
+          res.statusCode = 404;
+          res.end('Not Found');
+          return;
+        }
+        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+        res.end(data);
+      });
       return;
     }
 
@@ -67,7 +80,7 @@ const server = http.createServer((req, res) => {
     res.writeHead(200, {
       'Content-Type': contentType,
       'Content-Length': stats.size,
-      'Cache-Control': 'public, max-age=31536000' // cache static assets
+      'Cache-Control': 'public, max-age=86400',
     });
 
     if (req.method === 'HEAD') {
@@ -76,8 +89,7 @@ const server = http.createServer((req, res) => {
     }
 
     const stream = fs.createReadStream(filePath);
-    stream.on('error', (streamErr) => {
-      console.error('Stream error:', streamErr);
+    stream.on('error', () => {
       if (!res.headersSent) {
         res.statusCode = 500;
         res.end('Internal Server Error');
@@ -88,5 +100,5 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Wedding invitation server running on port/pipe ${PORT}`);
 });
